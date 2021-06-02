@@ -17,6 +17,7 @@
 		5C84736C2668130200E82A4F /* HotelsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C84736B2668130200E82A4F /* HotelsUITests.swift */; };
 		5C84737C266816A600E82A4F /* HotelsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C84737B266816A600E82A4F /* HotelsAPI.swift */; };
 		5C84737F26681C5300E82A4F /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C84737E26681C5300E82A4F /* Results.swift */; };
+		5C84738126682DF100E82A4F /* HotelsStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C84738026682DF100E82A4F /* HotelsStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		5C84736D2668130200E82A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C84737B266816A600E82A4F /* HotelsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsAPI.swift; sourceTree = "<group>"; };
 		5C84737E26681C5300E82A4F /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
+		5C84738026682DF100E82A4F /* HotelsStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			children = (
 				5C84737B266816A600E82A4F /* HotelsAPI.swift */,
 				5C84737E26681C5300E82A4F /* Results.swift */,
+				5C84738026682DF100E82A4F /* HotelsStruct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				5C84734C266812FF00E82A4F /* SceneDelegate.swift in Sources */,
 				5C84737C266816A600E82A4F /* HotelsAPI.swift in Sources */,
 				5C84737F26681C5300E82A4F /* Results.swift in Sources */,
+				5C84738126682DF100E82A4F /* HotelsStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
