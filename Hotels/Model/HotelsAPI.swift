@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol HotelsManagerDelegate{
+    func didUpdateHotels(hotels: [HotelsStruct])
+    func didCatchError(_ error: Error)
+}
+
 class HotelsAPI {
+    
+    var delegate: HotelsManagerDelegate?
     
     var hotels = [HotelsStruct]()
     
@@ -26,8 +33,8 @@ class HotelsAPI {
                 
                     if let safeData = data {
                         
-                        if let hotel = self.decodeJSON(hotelsData: safeData){
-                           
+                        if self.decodeJSON(hotelsData: safeData) != nil{
+                            
                         }
                         
                     }
@@ -67,11 +74,13 @@ class HotelsAPI {
                 
                 if let uwrappedHotel = hotel {
                     self.hotels.append(uwrappedHotel)
+                    self.delegate?.didUpdateHotels(hotels: hotels)
                 }
             }
             
         } catch {
-            print(error)
+            self.delegate?.didCatchError(error)
+            return nil
         }
         
         return hotel
