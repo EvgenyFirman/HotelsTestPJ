@@ -8,11 +8,10 @@
 import Foundation
 
 struct HotelsStruct {
-   
     let id: Int
     let name: String
-    let adress: String?
-    let stars: Float?
-    let distance: Float?
-    let suites_availibility: String?
+    let address: String
+    let stars: Float
+    let distance: Float
+    let suites_availability: String
 }

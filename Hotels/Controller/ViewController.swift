@@ -7,30 +7,38 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-  
+class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+   
     let hotels = HotelsAPI()
+    
+    private var dataHotels =  [HotelsStruct]()
+
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+    
         // Do any additional setup after loading the view.
         hotels.delegate = self
+        
         hotels.callAPI()
+        
+             
     }
-
 }
 
+
+
+// MARK: - HotelsManagerDelegate
 extension ViewController: HotelsManagerDelegate{
  
-    
-    
+    // Update hotels delegate
     func didUpdateHotels(hotels: [HotelsStruct]) {
-            var post = hotels
-            print(post)
-
+        self.dataHotels = hotels
+        
     }
     
+    // Error handler
     func didCatchError(_ error: Error) {
         print(error)
     }

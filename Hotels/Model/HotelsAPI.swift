@@ -1,14 +1,15 @@
 //
 //  HotelsAPI.swift
 //  Hotels
-//
 //  Created by Евгений Фирман on 02.06.2021.
 //
 
 import UIKit
 
 protocol HotelsManagerDelegate{
+    
     func didUpdateHotels(hotels: [HotelsStruct])
+    
     func didCatchError(_ error: Error)
 }
 
@@ -26,7 +27,6 @@ class HotelsAPI {
             
             let session = URLSession(configuration: .default)
         
-            
             let task = session.dataTask(with: url) { (data,urlResponse,error)  in
                
                 if error == nil {
@@ -36,7 +36,6 @@ class HotelsAPI {
                         if self.decodeJSON(hotelsData: safeData) != nil{
                             
                         }
-                        
                     }
                 }
             }
@@ -60,29 +59,30 @@ class HotelsAPI {
         do {
             
             let decodedData = try decoder.decode([Results].self, from: hotelsData)
-            
-            for i in 0..<decodedData.count {
-                
-                let id = decodedData[i].id
-                let name = decodedData[i].name
-                let adress = decodedData[i].adress
-                let stars = decodedData[i].stars
-                let distance = decodedData[i].distance
-                let suites_availibility = decodedData[i].suites_availibility
-                
-                hotel = HotelsStruct(id: id , name: name, adress: adress, stars: stars, distance: distance, suites_availibility: suites_availibility)
-                
-                if let uwrappedHotel = hotel {
-                    self.hotels.append(uwrappedHotel)
-                    self.delegate?.didUpdateHotels(hotels: hotels)
+            print(decodedData)
+        
+                for i in 0..<decodedData.count {
+                    
+                    let id = decodedData[i].id
+                    let name = decodedData[i].name
+                    let address = decodedData[i].address
+                    let stars = decodedData[i].stars
+                    let distance = decodedData[i].distance
+                    let suites_availability = decodedData[i].suites_availability
+                    
+                    hotel = HotelsStruct(id: id , name: name, address: address, stars: stars, distance: distance, suites_availability: suites_availability)
+                    
+                    if let uwrappedHotel = hotel {
+                        self.hotels.append(uwrappedHotel)
+                    }
                 }
-            }
             
         } catch {
             self.delegate?.didCatchError(error)
             return nil
         }
         
+        self.delegate?.didUpdateHotels(hotels: hotels)
         return hotel
     }
 }
