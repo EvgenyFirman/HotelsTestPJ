@@ -2,10 +2,11 @@
 //  HotelsAPI.swift
 //  Hotels
 //  Created by Евгений Фирман on 02.06.2021.
-//
+
 
 import UIKit
 
+// Initializing Protocol
 protocol HotelsManagerDelegate{
     
     func didUpdateHotels(hotels: [HotelsStruct])
@@ -13,15 +14,17 @@ protocol HotelsManagerDelegate{
     func didCatchError(_ error: Error)
 }
 
+
 class HotelsAPI {
     
     var delegate: HotelsManagerDelegate?
     
     var hotels = [HotelsStruct]()
     
-    var hotelsAPI: String = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
-    
-    func hotelAPICall(_ url: String) {
+    let hotelItem = HotelItemAPI()
+
+// API Call 
+    func hotelAPICall(_ url: String = APIStructure.hotelsAPI) {
         
         if let url = URL(string: url){
             
@@ -34,7 +37,9 @@ class HotelsAPI {
                     if let safeData = data {
                         
                         if self.decodeJSON(hotelsData: safeData) != nil{
-                            
+                            for i in 0..<self.hotels.count{
+                                self.hotelItem.callAPI(self.hotels[i].id)
+                            }
                         }
                     }
                 }
@@ -44,13 +49,7 @@ class HotelsAPI {
     }
     
     
-    func callAPI() {
-        
-        return hotelAPICall(hotelsAPI)
-        
-    }
-    
-    func decodeJSON(hotelsData: Data) -> HotelsStruct?{
+    func decodeJSON(hotelsData: Data){
         
         let decoder = JSONDecoder()
         
@@ -59,7 +58,6 @@ class HotelsAPI {
         do {
             
             let decodedData = try decoder.decode([Results].self, from: hotelsData)
-            print(decodedData)
         
                 for i in 0..<decodedData.count {
                     
@@ -77,13 +75,12 @@ class HotelsAPI {
                     }
                 }
             
+            
         } catch {
             self.delegate?.didCatchError(error)
-            return nil
         }
         
         self.delegate?.didUpdateHotels(hotels: hotels)
-        return hotel
     }
-}
 
+}
