@@ -5,11 +5,13 @@
 //  Created by Евгений Фирман on 06.06.2021.
 //
 
-import Foundation
+import UIKit
 
 // API Call
  
 class HotelItemAPI {
+    
+    var hotelImage = HotelImage()
     
     var hotelItem = [HotelItemStruct]()
     
@@ -19,6 +21,7 @@ class HotelItemAPI {
     }
     
     
+
     func hotelItemAPICall(_ url: String) {
         
         if let url = URL(string: url){
@@ -32,7 +35,7 @@ class HotelItemAPI {
                     if let safeData = data {
                         
                         if self.decodeJSON(hotelsData: safeData) != nil{
-                            
+                           
                         }
                     }
                 }
@@ -52,21 +55,19 @@ class HotelItemAPI {
         do {
             
             let decodedData = try decoder.decode(HotelItemStruct.self, from: hotelsData)
-            print(decodedData)
-                    
                     let id = decodedData.id
                     let image = decodedData.image
                     
                     hotelItem = HotelItemStruct(id:id ,image: image)
                     
-                    if let unwrappedHotelItem = hotelItem {
-                        self.hotelItem.append(unwrappedHotelItem)
-                    }
-                
         } catch {
            print("Error")
         }
         
-        
+        if let unwrappedHotelItem = hotelItem {
+            self.hotelItem.append(unwrappedHotelItem)
+        }
     }
 }
+
+

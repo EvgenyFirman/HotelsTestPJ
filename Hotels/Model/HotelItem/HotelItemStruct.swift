@@ -9,5 +9,5 @@ import Foundation
 
 struct HotelItemStruct: Decodable,Identifiable {
     let id: Int
-    let image: String
+    let image: String?
 }
