@@ -18,6 +18,7 @@ class ViewController: UITableViewController {
     
     let hotelItem = HotelItemAPI()
     
+    
     private var dataHotels =  [HotelsStruct]()
     
     
@@ -29,6 +30,7 @@ class ViewController: UITableViewController {
         // Do any additional setup after loading the view.
         hotels.delegate = self
         hotels.hotelAPICall()
+
         
     }
 
@@ -50,8 +52,16 @@ class ViewController: UITableViewController {
         
         cell.hotelStars.text = String(format:"%.0f", hotelData.stars)
         
-//        cell.hotelImage.image = hotelImagesDecoded[0]
-        
+        DispatchQueue.main.async {
+            for i in 0..<self.hotelImages.count{
+                let completedUrl = "https://github.com/iMofas/ios-android-test/raw/master/\(self.hotelImages[i].image!)"
+                if hotelData.id == self.hotelImages[i].id {
+                    cell.hotelImage.downloaded(from: completedUrl)
+                }
+            }
+           
+        }
+      
         return cell
     }
     
@@ -67,6 +77,7 @@ class ViewController: UITableViewController {
             _ = segue.destination as! DetailViewController
         }
     }
+    
 }
 
 
@@ -75,24 +86,10 @@ class ViewController: UITableViewController {
 extension ViewController: HotelsManagerDelegate{
     
     func didUpdateImages(images: [HotelItemStruct]) {
-        
         DispatchQueue.main.async {
+            self.hotelImages = images
+        }
         
-                guard let url = URL(string: "https://github.com/iMofas/ios-android-test/raw/master/1.jpg") else {
-                    return
-                }
-                let getDataTask = URLSession.shared.dataTask(with: url) { (data,_,error) in
-                    guard let data = data, error == nil else {
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        if let image = UIImage(data: data){
-                            self.hotelImagesDecoded.append(image)
-                        }
-                    }
-                }
-                getDataTask.resume()
-            }
     }
     
     // Update hotels delegate
@@ -132,5 +129,27 @@ extension UIViewController {
     func removeSpinner(){
         aView?.removeFromSuperview()
         aView = nil
+    }
+}
+
+// MARK: - ImageView Extension for downloading
+extension UIImageView {
+    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
+            }
+        }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
     }
 }
