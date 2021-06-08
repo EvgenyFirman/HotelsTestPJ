@@ -6,6 +6,7 @@ import UIKit
 
 
 protocol HotelsManagerDelegate{
+    func didUpdateImages(images: [HotelItemStruct])
     
     func didUpdateHotels(hotels: [HotelsStruct])
     
@@ -34,18 +35,13 @@ class HotelsAPI {
                     if let safeData = data {
                         
                         if self.decodeJSON(hotelsData: safeData) != nil {
-                            
-                            print(self.hotels)
-//                            for i in 0..<self.hotels.count{
-//
-//                                self.hotelItem.callAPI(self.hotels[i].id)
-//
-//                            }
+                            for i in 0..<self.hotels.count{
+                                self.hotelItem.callAPI(self.hotels[i].id)
+                            }
+                            self.delegate?.didUpdateImages(images: self.hotelItem.hotelItem)
                         }
                     }
-                } else if error != nil{
-                    self.delegate?.didCatchError(error!)
-                }
+                } 
             }
             task.resume()
         }

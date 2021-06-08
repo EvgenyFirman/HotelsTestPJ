@@ -35,7 +35,7 @@ class HotelItemAPI {
                     if let safeData = data {
                         
                         if self.decodeJSON(hotelsData: safeData) != nil{
-                                
+                           
                         }
                     }
                 }
@@ -55,17 +55,17 @@ class HotelItemAPI {
         do {
             
             let decodedData = try decoder.decode(HotelItemStruct.self, from: hotelsData)
-            
                     let id = decodedData.id
                     let image = decodedData.image
                     
                     hotelItem = HotelItemStruct(id:id ,image: image)
                     
-                    if let unwrappedHotelItem = hotelItem {
-                        self.hotelItem.append(unwrappedHotelItem)
-                    }
         } catch {
            print("Error")
+        }
+        
+        if let unwrappedHotelItem = hotelItem {
+            self.hotelItem.append(unwrappedHotelItem)
         }
     }
 }

@@ -10,6 +10,10 @@ class ViewController: UITableViewController {
     
     @IBOutlet weak var tableVIEW: UITableView!
     
+    var hotelImages = [HotelItemStruct]()
+    
+    var hotelImagesDecoded = [UIImage]()
+    
     let hotels = HotelsAPI()
     
     let hotelItem = HotelItemAPI()
@@ -26,7 +30,6 @@ class ViewController: UITableViewController {
         hotels.delegate = self
         hotels.hotelAPICall()
         
-   
     }
 
     
@@ -46,6 +49,8 @@ class ViewController: UITableViewController {
         cell.hotelName.text = hotelData.name
         
         cell.hotelStars.text = String(format:"%.0f", hotelData.stars)
+        
+//        cell.hotelImage.image = hotelImagesDecoded[0]
         
         return cell
     }
@@ -68,6 +73,27 @@ class ViewController: UITableViewController {
 // MARK: - HotelsManagerDelegate
 
 extension ViewController: HotelsManagerDelegate{
+    
+    func didUpdateImages(images: [HotelItemStruct]) {
+        
+        DispatchQueue.main.async {
+        
+                guard let url = URL(string: "https://github.com/iMofas/ios-android-test/raw/master/1.jpg") else {
+                    return
+                }
+                let getDataTask = URLSession.shared.dataTask(with: url) { (data,_,error) in
+                    guard let data = data, error == nil else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        if let image = UIImage(data: data){
+                            self.hotelImagesDecoded.append(image)
+                        }
+                    }
+                }
+                getDataTask.resume()
+            }
+    }
     
     // Update hotels delegate
     func didUpdateHotels(hotels: [HotelsStruct]) {
