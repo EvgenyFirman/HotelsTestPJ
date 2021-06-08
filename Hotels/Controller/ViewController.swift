@@ -12,15 +12,11 @@ class ViewController: UITableViewController {
     
     var hotelImages = [HotelItemStruct]()
     
-    var hotelImagesDecoded = [UIImage]()
-    
     let hotels = HotelsAPI()
     
     let hotelItem = HotelItemAPI()
     
-    
     private var dataHotels =  [HotelsStruct]()
-    
     
     override func viewDidLoad() {
         
@@ -30,7 +26,6 @@ class ViewController: UITableViewController {
         // Do any additional setup after loading the view.
         hotels.delegate = self
         hotels.hotelAPICall()
-
         
     }
 
@@ -50,18 +45,18 @@ class ViewController: UITableViewController {
         
         cell.hotelName.text = hotelData.name
         
-        cell.hotelStars.text = String(format:"%.0f", hotelData.stars)
+        cell.hotelStars.text = String(format: "%.0f", hotelData.stars)
         
         DispatchQueue.main.async {
             for i in 0..<self.hotelImages.count{
-                let completedUrl = "https://github.com/iMofas/ios-android-test/raw/master/\(self.hotelImages[i].image!)"
+                
+                let completedUrl = "https://github.com/iMofas/ios-android-test/raw/master/\(self.hotelImages[i].image ?? "1.jpg")"
+                
                 if hotelData.id == self.hotelImages[i].id {
                     cell.hotelImage.downloaded(from: completedUrl)
                 }
             }
-           
         }
-      
         return cell
     }
     
