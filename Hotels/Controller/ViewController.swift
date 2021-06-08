@@ -59,7 +59,7 @@ class ViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "hotelDetail"{
-            let destinationVC = segue.destination as! DetailViewController
+            _ = segue.destination as! DetailViewController
         }
     }
 }

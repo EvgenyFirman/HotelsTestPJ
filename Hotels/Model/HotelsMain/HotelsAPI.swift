@@ -1,12 +1,10 @@
 //
 //  HotelsAPI.swift
-//  Hotels
 //  Created by Евгений Фирман on 02.06.2021.
-
 
 import UIKit
 
-// Initializing Protocol
+
 protocol HotelsManagerDelegate{
     
     func didUpdateHotels(hotels: [HotelsStruct])
@@ -23,7 +21,6 @@ class HotelsAPI {
     
     let hotelItem = HotelItemAPI()
 
-// API Call 
     func hotelAPICall(_ url: String = APIStructure.hotelsAPI) {
         
         if let url = URL(string: url){
@@ -36,12 +33,18 @@ class HotelsAPI {
                 
                     if let safeData = data {
                         
-                        if self.decodeJSON(hotelsData: safeData) != nil{
-                            for i in 0..<self.hotels.count{
-                                self.hotelItem.callAPI(self.hotels[i].id)
-                            }
+                        if self.decodeJSON(hotelsData: safeData) != nil {
+                            
+                            print(self.hotels)
+//                            for i in 0..<self.hotels.count{
+//
+//                                self.hotelItem.callAPI(self.hotels[i].id)
+//
+//                            }
                         }
                     }
+                } else if error != nil{
+                    self.delegate?.didCatchError(error!)
                 }
             }
             task.resume()
@@ -56,7 +59,6 @@ class HotelsAPI {
         var hotel: HotelsStruct?
         
         do {
-            
             let decodedData = try decoder.decode([Results].self, from: hotelsData)
         
                 for i in 0..<decodedData.count {
