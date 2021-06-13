@@ -13,7 +13,7 @@ protocol HotelsManagerDelegate{
     func didCatchError(_ error: Error)
 }
 
-
+// Hotels API Class
 class HotelsAPI {
     
     var delegate: HotelsManagerDelegate?
@@ -35,8 +35,11 @@ class HotelsAPI {
                     if let safeData = data {
                         
                         if self.decodeJSON(hotelsData: safeData) != nil {
+                            
                             for i in 0..<self.hotels.count{
+                                
                                 self.hotelItem.callAPI(self.hotels[i].id)
+                                
                             }
                             self.delegate?.didUpdateImages(images: self.hotelItem.hotelItem)
                         }
