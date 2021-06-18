@@ -4,8 +4,8 @@
 
 import UIKit
 
-
 protocol HotelsManagerDelegate{
+    
     func didUpdateImages(images: [HotelItemStruct])
     
     func didUpdateHotels(hotels: [HotelsStruct])
@@ -39,8 +39,9 @@ class HotelsAPI {
                             for i in 0..<self.hotels.count{
                                 
                                 self.hotelItem.callAPI(self.hotels[i].id)
-                                
+                        
                             }
+                            
                             self.delegate?.didUpdateImages(images: self.hotelItem.hotelItem)
                         }
                     }

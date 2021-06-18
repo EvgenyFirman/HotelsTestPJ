@@ -48,13 +48,18 @@ class ViewController: UITableViewController {
         cell.hotelStars.text = String(format: "%.0f", hotelData.stars)
         
         DispatchQueue.main.async {
+            
             for i in 0..<self.hotelImages.count{
-                
+                let defaultUrl = "https://github.com/iMofas/ios-android-test/raw/master/1.jpg"
                 let completedUrl = "https://github.com/iMofas/ios-android-test/raw/master/\(self.hotelImages[i].image ?? "1.jpg")"
                 
                 if hotelData.id == self.hotelImages[i].id {
                     cell.hotelImage.downloaded(from: completedUrl)
+                    print(completedUrl)
+                } else  {
+                    cell.hotelImage.downloaded(from: defaultUrl)
                 }
+                
             }
         }
         return cell
